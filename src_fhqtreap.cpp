@@ -305,6 +305,9 @@ public:
             }
             return *this;
         }
+        /**
+         * it--, if it == begin(), do nothing and return it
+         */
         iterator operator--(int)
         {
             iterator tmp = *this;
@@ -325,7 +328,6 @@ public:
             return p != other.p || base != other.base;
         }
     };
-
     /**
      * find the item in the treap
      * return the iterator to the item if the item is found
