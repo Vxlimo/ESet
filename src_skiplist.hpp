@@ -28,7 +28,7 @@ private:
             return;
         }
     };
-    Compare cmp = Compare(); /* the comparator */
+    Compare less = Compare(); /* the comparator */
     Node* top; /* the top node of the skiplist */
     Node* head; /* the head node of the bottom level */
     Node* tail; /* the tail node of the bottom level */
@@ -77,14 +77,14 @@ private:
      */
     bool equal(const Key& a, const Key& b) const
     {
-        return !(cmp(a, b) || cmp(b, a));
+        return !(less(a, b) || less(b, a));
     }
     /**
      * operator <= for Key
      */
     bool lessequal(const Key& a, const Key& b) const
     {
-        return !(cmp(b, a));
+        return !(less(b, a));
     }
     /**
      * generate the road to the item
@@ -148,14 +148,12 @@ public:
     SkipList()
     {
         build();
-        return;
     }
     SkipList(const SkipList& other)
     {
         build();
         for (iterator it = other.begin(); it != other.end(); it++)
             emplace(*it);
-        return;
     }
     SkipList(SkipList&& other)
     {
@@ -167,7 +165,6 @@ public:
         tail = other.tail;
         sz = other.sz;
         other.build();
-        return;
     }
     SkipList& operator=(const SkipList& other)
     {
@@ -223,7 +220,7 @@ public:
         const Key operator*() const
         {
             if (p->val == nullptr)
-                throw std::out_of_range("out of range");
+                throw std::out_of_range("dereference nullptr");
             return *(p->val);
         }
         const Key* operator->() const
