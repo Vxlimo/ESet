@@ -13,8 +13,10 @@ int main()
     //    start = clock();
     ESet<long long> s[25];
     ESet<long long>::iterator it;
-    int op, lst = 0, it_a = -1, valid = 0, cnt = 1;
+    int op, lst = 0, it_a = -1, valid = 0, cnt = 1, i = 1;
     while (scanf("%d", &op) != EOF) {
+        // std::cout << i << " " << op << std::endl;
+        i++;
         long long a, b, c;
         //        if(cnt==213){
         //            printf("!!!");
@@ -34,7 +36,6 @@ int main()
             scanf("%lld%lld", &a, &b);
             if (valid && it_a == a && *it == b)
                 valid = 0;
-            valid = 0;
             s[a].erase(b);
             break;
         case 2:

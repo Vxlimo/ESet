@@ -219,12 +219,14 @@ public:
         ~iterator() = default;
         const Key operator*() const
         {
-            if (p->val == nullptr)
+            if (p == nullptr || p->val == nullptr)
                 throw std::out_of_range("dereference nullptr");
             return *(p->val);
         }
         const Key* operator->() const
         {
+            if (p == nullptr || p->val == nullptr)
+                throw std::out_of_range("dereference nullptr");
             return p->val;
         }
         /**

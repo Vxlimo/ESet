@@ -45,7 +45,8 @@ private:
         }
     };
     Compare less = Compare(); /* the comparator */
-    Node *root, *end_p; /* the root of the treap */
+    Node* root; /* the root of the treap */
+    Node* end_p; /* the node of end() */
     /**
      * operator = for Key
      */
@@ -61,6 +62,59 @@ private:
         return !(less(b, a));
     }
     /**
+     * find the first node with value <= key
+     */
+    Node* pre(Node* cur, const Key& key) const
+    {
+        if (cur == nullptr)
+            return nullptr;
+        if (less(*(cur->val), key)) {
+            auto res = pre(cur->right, key);
+            if (res == nullptr)
+                return cur;
+            return res;
+        } else
+            return pre(cur->left, key);
+    }
+    /**
+     * find the first node with value > key
+     */
+    Node* nxt(Node* cur, const Key& key) const
+    {
+        if (cur == nullptr)
+            return nullptr;
+        if (lessequal(*(cur->val), key))
+            return nxt(cur->right, key);
+        else {
+            auto res = nxt(cur->left, key);
+            if (res == nullptr)
+                return cur;
+            return res;
+        }
+    }
+    /**
+     * find the last node
+     */
+    Node* last() const
+    {
+        Node* cur = root;
+        while (cur->right != nullptr)
+            cur = cur->right;
+        return cur;
+    }
+    /**
+     * find the rank of the key in the treap
+     */
+    size_t rank(Node* cur, const Key& key) const
+    {
+        if (cur == nullptr)
+            return 0;
+        if (lessequal(*(cur->val), key))
+            return 1 + (cur->left == nullptr ? 0 : cur->left->size) + rank(cur->right, key);
+        else
+            return rank(cur->left, key);
+    }
+    /**
      * pushup the size of the node
      */
     void pushup(Node* cur)
@@ -70,6 +124,7 @@ private:
             cur->size += cur->left->size;
         if (cur->right != nullptr)
             cur->size += cur->right->size;
+        return;
     }
     /**
      * split the treap rooted at the cur into two treaps
@@ -131,59 +186,6 @@ private:
             pushup(cur2);
             return cur2;
         }
-    }
-    /**
-     * find the first node with value <= key
-     */
-    Node* pre(Node* cur, const Key& key) const
-    {
-        if (cur == nullptr)
-            return nullptr;
-        if (less(*(cur->val), key)) {
-            auto res = pre(cur->right, key);
-            if (res == nullptr)
-                return cur;
-            return res;
-        } else
-            return pre(cur->left, key);
-    }
-    /**
-     * find the first node with value > key
-     */
-    Node* nxt(Node* cur, const Key& key) const
-    {
-        if (cur == nullptr)
-            return nullptr;
-        if (lessequal(*(cur->val), key))
-            return nxt(cur->right, key);
-        else {
-            auto res = nxt(cur->left, key);
-            if (res == nullptr)
-                return cur;
-            return res;
-        }
-    }
-    /**
-     * find the last node
-     */
-    Node* last() const
-    {
-        Node* cur = root;
-        while (cur->right != nullptr)
-            cur = cur->right;
-        return cur;
-    }
-    /**
-     * find the rank of the key in the treap
-     */
-    size_t rank(Node* cur, const Key& key) const
-    {
-        if (cur == nullptr)
-            return 0;
-        if (lessequal(*(cur->val), key))
-            return 1 + (cur->left == nullptr ? 0 : cur->left->size) + rank(cur->right, key);
-        else
-            return rank(cur->left, key);
     }
 
 public:
@@ -259,12 +261,14 @@ public:
         ~iterator() = default;
         const Key operator*() const
         {
-            if (p->val == nullptr)
+            if (p == nullptr || p->val == nullptr)
                 throw std::out_of_range("dereference nullptr");
             return *(p->val);
         }
         const Key* operator->() const
         {
+            if (p == nullptr || p->val == nullptr)
+                throw std::out_of_range("dereference nullptr");
             return p->val;
         }
         /**

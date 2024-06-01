@@ -34,8 +34,6 @@ int main()
             scanf("%lld%lld", &a, &b);
             if (valid && it_a == a && *it == b)
                 valid = 0;
-            if (valid && *it == b)
-                valid = 0;
             s[a].erase(b);
             break;
         case 2:
