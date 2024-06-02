@@ -2,14 +2,13 @@
 #include <ctime>
 #include <iostream>
 #include <vector>
-#define SkipList ESet
 
 template <class Key, class Compare = std::less<Key>>
 class SkipList {
 private:
     struct Node {
         Key* val; /* the value of the node */
-        Node *pre, next; /* the previous and next node in the same level */
+        Node *pre, *next; /* the previous and next node in the same level */
         Node* down; /* the node in the lower level */
         size_t sz; /* the number of nodes in the subtree rooted at the node */
         Node(Key* _value, Node* _pre, Node* _next, Node* _down, size_t _sz)
@@ -191,6 +190,12 @@ public:
     ~SkipList()
     {
         destroy();
+        return;
+    }
+    void clear()
+    {
+        destroy();
+        build();
         return;
     }
     class iterator {

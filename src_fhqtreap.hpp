@@ -1,7 +1,6 @@
 #include <cstddef>
 #include <ctime>
 #include <iostream>
-#define fhqTreap ESet
 
 template <class Key, class Compare = std::less<Key>>
 class fhqTreap {
@@ -232,6 +231,15 @@ public:
             delete root;
         if (end_p != nullptr)
             delete end_p;
+    }
+    void clear()
+    {
+        if (root != nullptr)
+            delete root;
+        if (end_p != nullptr)
+            delete end_p;
+        root = nullptr;
+        end_p = new Node();
     }
     class iterator {
         friend class fhqTreap;

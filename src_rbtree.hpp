@@ -1,7 +1,6 @@
 #include <cstddef>
 #include <ctime>
 #include <iostream>
-#define RBTree ESet
 
 template <class Key, class Compare = std::less<Key>>
 class RBTree {
@@ -557,6 +556,15 @@ public:
             destroy(root);
         if (end_p != nullptr)
             delete end_p;
+    }
+    void clear()
+    {
+        if (root != nullptr)
+            destroy(root);
+        if (end_p != nullptr)
+            delete end_p;
+        end_p = new Node();
+        root = end_p;
     }
     class iterator {
         friend class RBTree;

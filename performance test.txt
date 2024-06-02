@@ -1,0 +1,41 @@
+insert 1000000 elements to set, skiplist, treap, rbtree
+
+random insert 1000 elements from set, skiplist, treap, rbtree
+set insert time: 2095
+skiplist insert time: 5900
+treap insert time: 6004
+rbtree insert time: 3472
+
+random erase 1000 elements from set, skiplist, treap, rbtree
+set erase time: 2432
+skiplist erase time: 5863
+treap erase time: 4269
+rbtree erase time: 2371
+
+random find 1000 elements from set, skiplist, treap, rbtree
+set find time: 1883
+skiplist find time: 4000
+treap find time: 3756
+rbtree find time: 2622
+
+iterator operation to set, skiplist, treap, rbtree
+set iterator time: 191653
+skiplist iterator time: 156726
+treap iterator time: 371622
+rbtree iterator time: 326257
+
+copy operation to set, skiplist, treap, rbtree
+set copy time: 248558
+skiplist copy time: 1173282
+treap copy time: 334361
+rbtree copy time: 253915
+
+clear operation to set, skiplist, treap, rbtree
+set clear time: 191548
+skiplist clear time: 356034
+treap clear time: 212502
+rbtree clear time: 209089
+
+skiplist<<treap<rbtree<set
+
+skiplist use a large space to reach a faster enumeration
